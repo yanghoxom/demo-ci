@@ -41,6 +41,8 @@ jobs:
       - run: bundle exec rake db:migrate
       - run: bundle exec rake db:schema:load
 
+      # bundle gem
+      - run: bundle install
       # run tests!
       - run:
           name: run tests
