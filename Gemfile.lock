@@ -46,6 +46,9 @@ GEM
     execjs (2.7.0)
     git_diff_parser (3.1.0)
     hike (1.2.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
@@ -63,6 +66,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    multi_xml (0.6.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     parallel (1.12.1)
@@ -162,6 +166,7 @@ PLATFORMS
 DEPENDENCIES
   checkstyle_filter-git
   coffee-rails (~> 4.0.0)
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   nokogiri
