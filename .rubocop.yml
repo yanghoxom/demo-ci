@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - "db/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "log/**/*"
+  TargetRubyVersion: 2.3
+  TargetRailsVersion: 4.1
