@@ -41,6 +41,27 @@ jobs:
       - run: bundle exec rake db:migrate
       - run: bundle exec rake db:schema:load
 
+      # rubocop
+      - run:
+          name: rubocop
+          context: [
+            GITHUB_ACCESS_TOKEN,
+            CIRCLE_BUILD_URL,
+            CI_PULL_REQUEST
+          ]
+          command: sh run_with_rubocop.sh
+      # # run tests!
+      # - run:
+      #     name: run tests
+      #     command: |
+      #       mkdir /tmp/test-results
+      #       TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+      #       bundle exec rspec --format progress \
+      #                       --format RspecJunitFormatter \
+      #                       --out /tmp/test-results/rspec.xml \
+      #                       --format progress \
+      #                       $TEST_FILES
 
       # collect reports
       - store_test_results:
