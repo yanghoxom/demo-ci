@@ -1,6 +1,10 @@
 err=$( git fetch origin master && git diff -z --name-only FETCH_HEAD.. \
  | xargs -0 bundle exec rubocop-select \
- | bundle exec rubocop --force-exclusion --config .rubocop.yml)
+ | xargs bundle exec rubocop --force-exclusion --config .rubocop.yml \
+  --require rubocop/formatter/checkstyle_formatter \
+  --format RuboCop::Formatter::CheckstyleFormatter \
+ | bundle exec checkstyle_filter-git diff FETCH_HEAD)
+
 echo $err
 mess=`bundle exec ruby parse_rubocop_xml.rb $err`
 echo $mess
