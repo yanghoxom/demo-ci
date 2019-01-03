@@ -6,15 +6,20 @@ err=$( git fetch origin master && git diff -z --name-only FETCH_HEAD.. \
  | bundle exec checkstyle_filter-git diff FETCH_HEAD)
 
 echo $err
-mess=`bundle exec ruby parse_rubocop_xml.rb $err`
+mess=`bundle exec ruby parse_rubocop_xml.rb $err $CIRCLE_SHA1`
 echo $mess
 if [ "$mess" ]; then
-  POST_BODY="{\"body\": \"RUBOCOP WARNING!!! \n $mess  \n\n $CIRCLE_BUILD_URL\"}"
   curl -XPOST \
     -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
     -H "Content-Type: application/json" \
-    -d "$POST_BODY" \
-    https://api.github.com/repos/memsenpai/demo-ci/issues/${CI_PULL_REQUEST##*/}/comments
+    -d "$mess" \
+    https://api.github.com/repos/memsenpai/demo-ci/pulls/${CI_PULL_REQUEST##*/}/reviews
+  # echo $response
+  # curl -XPOST \
+  #   -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
+  #   -H "Content-Type: application/json" \
+  #   -d "{event: \"COMMENT\"}" \
+  #   https://api.github.com/repos/memsenpai/demo-ci/pulls/${CI_PULL_REQUEST##*/}/reviews/$response["id"]/events
 fi
 
 # # @drone_link = ARGV[0]
