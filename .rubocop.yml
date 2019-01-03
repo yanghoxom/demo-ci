@@ -1,9 +1,105 @@
 AllCops:
   Exclude:
-    - "db/**/*"
-    - "tmp/**/*"
-    - "vendor/**/*"
-    - "bin/**/*"
-    - "log/**/*"
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'config/unicorn.rb'
+    - 'bin/*'
+    - 'db/*'
+    - 'spec/**/*'
+    - 'config/*'
   TargetRubyVersion: 2.3
   TargetRailsVersion: 4.1
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 20 lines of code.'
+  StyleGuide: '#short-methods'
+  Enabled: true
+  CountComments: false  # count full line comments?
+  Max: 20
+
+Metrics/ClassLength:
+  Description: 'Avoid classes longer than 200 lines of code.'
+  Enabled: true
+  CountComments: false  # count full line comments?
+  Max: 200
+
+
+Metrics/ModuleLength:
+  Description: 'Avoid modules longer than 200 lines of code.'
+  Enabled: true
+  CountComments: false  # count full line comments?
+  Max: 200
+
+Style/RescueModifier:
+  Description: 'Avoid using rescue in its modifier form. Now disable for this usecase a = 1/0 rescue 0 '
+  StyleGuide: '#no-rescue-modifiers'
+  Enabled: false
+
+Metrics/LineLength:
+  Description: 'Limit lines to 120 characters.'
+  StyleGuide: '#80-character-limits'
+  Enabled: true
+  Max: 120
+  # To make it possible to copy or click on URIs in the code, we allow lines
+  # containing a URI to be longer than Max.
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+  # The IgnoreCopDirectives option causes the LineLength rule to ignore cop
+  # directives like '# rubocop: enable ...' when calculating a line's length.
+  IgnoreCopDirectives: false
+  # The IgnoredPatterns option is a list of !ruby/regexp and/or string
+  # elements. Strings will be converted to Regexp objects. A line that matches
+  # any regular expression listed in this option will be ignored by LineLength.
+  IgnoredPatterns: []
+
+Style/MethodDefParentheses:
+  Description: >-
+                 Checks if the method definitions have or don't have
+                 parentheses.
+  StyleGuide: '#method-parens'
+  Enabled: false
+  SupportedStyles:
+    - require_parentheses
+    - require_no_parentheses
+    - require_no_parentheses_except_multiline
+
+SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+
+Metrics/AbcSize:
+  # The ABC size is a calculated magnitude, so this number can be an Integer or
+  # a Float.
+  Max: 30
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+
+Style/NumericPredicate:
+  StyleGuide: '#comparison-methods'
+  # This will change to a new method call which isn't guaranteed to be on the
+  # object. Switching these methods has to be done with knowledge of the types
+  # of the variables which rubocop doesn't have.
+  AutoCorrect: false
+  Enabled: true
+  EnforcedStyle: comparison
+  SupportedStyles:
+    - predicate
+    - comparison
+
+Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  StyleGuide: '#namespace-definition'
+  # Moving from compact to nested children requires knowledge of whether the
+  # outer parent is a module or a class. Moving from nested to compact requires
+  # verification that the outer parent is defined elsewhere. Rubocop does not
+  # have the knowledge to perform either operation safely and thus requires
+  # manual oversight.
+  Enabled: false
